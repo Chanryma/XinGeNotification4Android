@@ -77,6 +77,15 @@ public class NotificationService4Android extends ABaseNotificationService {
         validateSendMessageResult(result);
     }
 
+    @Override
+    protected void push2AllUsersImpl(JSONObject content) throws NotificationException {
+        checkReadiness();
+
+        Message message = createMessage4Android(content.toString(), Message.TYPE_MESSAGE);
+        JSONObject result = xinGeApp.pushAllDevice(XingeApp.DEVICE_ALL, message);
+        validateSendMessageResult(result);
+    }
+
     private Message createMessage4Android(String content, int msgType) {
         Message message = new Message();
         message.setExpireTime(MSG_EXPIRE_TIME);
