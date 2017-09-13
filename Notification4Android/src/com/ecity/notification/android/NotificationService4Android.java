@@ -69,18 +69,14 @@ public class NotificationService4Android extends ABaseNotificationService {
     @Override
     protected void push2UsersImpl(JSONObject content, List<String> userIds) throws NotificationException {
         checkReadiness();
-
         Message message = createMessage4Android(content.toString(), Message.TYPE_MESSAGE);
-        JSONObject result = xinGeApp.createMultipush(message);
-        validateCreateMessageResult(result);
-        result = xinGeApp.pushAccountListMultiple(result.getJSONObject("result").getInt("push_id"), userIds);
+        JSONObject result = xinGeApp.pushAccountList(0, userIds, message);
         validateSendMessageResult(result);
     }
 
     @Override
     protected void push2AllUsersImpl(JSONObject content) throws NotificationException {
         checkReadiness();
-
         Message message = createMessage4Android(content.toString(), Message.TYPE_MESSAGE);
         JSONObject result = xinGeApp.pushAllDevice(XingeApp.DEVICE_ALL, message);
         validateSendMessageResult(result);
